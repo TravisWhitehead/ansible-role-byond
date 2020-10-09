@@ -1,0 +1,22 @@
+---
+- name: Get installed version of BYOND
+  command: DreamDaemon -version
+  register: installed_version
+
+- name: Determine whether BYOND needs to be updated
+  set_fact:
+    update_byond: "{{ byond_version not in installed_version.stdout }}"
+
+- name: Unarchive BYOND
+  unarchive:
+    dest: /tmp
+    remote_src: true
+    src: "{{ byond_url }}"
+  when: update_byond | bool
+
+- name: Install BYOND
+  command: make install
+  args:
+    chdir: /tmp/byond
+  become: true
+  when: update_byond | bool

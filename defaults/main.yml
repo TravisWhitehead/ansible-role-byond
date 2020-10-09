@@ -1,0 +1,7 @@
+---
+# www.byond.com/download/
+byond_major_version: 513
+byond_minor_version: 1533
+byond_url: "https://secure.byond.com/download/build/{{ byond_major_version }}/\
+  {{ byond_version }}_byond_linux.zip"
+byond_version: "{{ byond_major_version }}.{{ byond_minor_version }}"

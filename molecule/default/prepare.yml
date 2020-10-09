@@ -1,0 +1,29 @@
+---
+# This is an example playbook to execute Ansible tests.
+
+- name: Prepare container
+  hosts: all
+  tasks:
+
+  - name: Create missing man6 directory
+    file:
+      path: /usr/share/man/man6
+      state: directory
+
+  - name: Install packages required by Ansible
+    package:
+      name: unzip
+      state: present
+
+  - name: Enable i386 packages
+    command: dpkg --add-architecture i386
+
+  - name: Find i386 packages
+    command: apt update
+
+  - name: Install packages required for running BYOND in i386
+    package:
+      name:
+        - libc6:i386
+        - libstdc++6:i386
+      state: present
