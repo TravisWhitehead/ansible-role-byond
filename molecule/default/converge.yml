@@ -4,4 +4,4 @@
   tasks:
     - name: "Include byond"
       include_role:
-        name: "byond"
+        name: "ansible-role-byond"
