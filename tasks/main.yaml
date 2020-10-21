@@ -1,11 +1,17 @@
 ---
+- name: Check if BYOND is installed
+  stat:
+    path: DraemDaemon
+  register: dream_daemon
+
 - name: Get installed version of BYOND
   command: DreamDaemon -version
   register: installed_version
+  when: dream_daemon.stat.exists | bool
 
 - name: Determine whether BYOND needs to be updated
   set_fact:
-    update_byond: "{{ byond_version not in installed_version.stdout }}"
+    update_byond: "{{ not dream_daemon.stat.exists or byond_version not in installed_version.stdout }}"
 
 - name: Unarchive BYOND
   unarchive:
